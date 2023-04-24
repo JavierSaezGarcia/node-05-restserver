@@ -14,10 +14,10 @@ router.get('/', userGet);
 // POST
 router.post('/', userPost );
 // PUT
-router.put('/', userPut);
+router.put('/:id', userPut);
 // PATCH
-router.patch('/', userPatch);
+router.patch('/:id', userPatch);
 // DELETE
-router.delete('/', userDelete);
+router.delete('/:id', userDelete);
 
 module.exports = router;

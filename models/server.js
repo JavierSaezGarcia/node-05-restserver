@@ -17,6 +17,10 @@ class Server {
     middlewares() { 
         // uso de cors para restringir las peticiones
         this.app.use( cors() );
+
+        // Lectura y parseo del body del request
+        this.app.use( express.json() );
+        
         // directorio publico
         this.app.use(express.static('public'));
     }
