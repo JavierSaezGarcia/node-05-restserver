@@ -4,5 +4,7 @@ Remember that you must execute the following instruction to rebuild the Node mod
 ``` 
     npm install 
 ```
+## Connect compassDB 
+## Connect app : ```nodemon app.js ```
 
 
