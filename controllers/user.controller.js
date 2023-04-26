@@ -4,25 +4,29 @@ const bcryptjs = require('bcryptjs');
 
 const userGet = async (req = request, res = response) => {
 
-    const { limite = 5, desde = 0 } = req.query;
-    const query = { state: true };
+    const { limite = 20, desde = 0 } = req.query;
+    const query = { state: true }; // Limitamos los usuarios que queremos mostrar con estado true
     // const users = await User.find(query)
     // .skip(Number(desde))
     // .limit(Number(limite));
 
     // const totalRegistros = await User.countDocuments(query); // Con countDocuments() podemos contar los registros de la BD
     // Esta forma es para ejecutar los await de forma simultanea y que no se bloquee el flujo de ejecucion a parte de ganar milisegundos en dicha ejecucion.
-    const [totalRegistros, usuarios] = await Promise.all([
+    const [totalRegistrosLimited, totalRegistros, usuariosLimited, usuariosTotales ] = await Promise.all([
         User.countDocuments(query),
+        User.countDocuments(),
         User.find(query)
             .skip(Number(desde))
-            .limit(Number(limite))
+            .limit(Number(limite)),
+            User.find()
         
     ]);
 
     res.json({
+        totalRegistrosLimited,
         totalRegistros,
-        usuarios
+        usuariosLimited,
+        usuariosTotales
     });
 
     // res.json({
@@ -71,15 +75,22 @@ const userPut = async (req = request, res = response) => {
     res.json(user);
 };
 
-
-const userDelete = async(req, res = response) => {
+const userDelete = async(req = request, res = response) => {
     const { id } = req.params;
     // Fisicamente lo borramos
     // const user = await User.findByIdAndDelete(id);
-    // Otra forma mejor de borrarlo es ponerle el state a false
-    const user = await User.findByIdAndUpdate(id, {state: false});
     
-    res.json( user)
+    // Otra forma mejor de borrarlo es ponerle el state a false
+    const user = await User.findByIdAndUpdate(id, {state: false}, { new: true }); 
+    // El new: true nos devuelve el user actualizado
+    // Necesitamos para que funcione el metodo findByIdAndUpdate pasar un tercer parametro {new: true} para que el user este actualizado
+    const userAuthenticated = req.user;
+    
+    res.json({
+        
+        user,
+        userAuthenticated
+    })
 }
 
 

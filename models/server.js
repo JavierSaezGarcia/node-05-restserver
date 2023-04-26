@@ -8,6 +8,8 @@ class Server {
         this.app = express();
         this.port = process.env.PORT || 3000;
         this.usersPath = '/api/users';
+        // Ruta autenticada con JWT
+        this.authPath = '/api/auth'; // 1.- creamos un path solo para la autenticacion
 
         // Conectar a base de datos
         this.conectarDB();
@@ -34,7 +36,9 @@ class Server {
     }
     // Rutas o endpoints
     routes() {
-       this.app.use(this.usersPath, require('../routes/user.routes.js'));
+        this.app.use(this.authPath, require('../routes/auth.js')); // 2.- definiendo el path para esta ruta que va a routes/auth.js
+        this.app.use(this.usersPath, require('../routes/user.routes.js'));
+       
     }
 
     

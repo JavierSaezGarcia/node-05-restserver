@@ -1,19 +1,31 @@
 // Requires
 const { Router } = require('express');
+const { check } = require('express-validator');
+
+// const { validarCampos } = require('../middlewares/validar-campos');
+// const { validarJWT } = require('../middlewares/validar-jwt');
+// const { esAdminRole, tieneRole } = require('../middlewares/validar-role');
+const { validarCampos, 
+        validarJWT, 
+        esAdminRole, 
+        tieneRole 
+} = require('../middlewares');
+
+const { isRoleValid, existeEmail, existeUsuarioPorId } = require('../helpers/db-validators');
+
 const { userGet, 
         userPost,
-        userPut,
-        userPatch,
+        userPut,        
         userDelete
         } = require('../controllers/user.controller');
 const router = Router();
 
-const { check } = require('express-validator');
-const { validarCampos } = require('../middlewares/validar-campos');
-const { isRoleValid, existeEmail, existeUsuarioPorId } = require('../helpers/db-validators');
 
 
-// CRUD
+
+
+
+// CRUD ****************************
 // GET
 router.get('/', userGet);
 // POST
@@ -47,10 +59,15 @@ router.put('/:id',[
 ,userPut); // router es un objeto, y el metodo put es un metodo del objeto
 
 // DELETE
-router.delete('/:id', [
+router.delete('/:id', [        
+
+        validarJWT,
+        tieneRole('ADMIN_ROLE', 'VENTAS_ROLE'),
+        // esAdminRole,
         check('id', 'This is not a valid ID').isMongoId(), 
         check('id').custom( existeUsuarioPorId ),
         validarCampos // Importamos el middleware de validar campos
+        
 ]
 ,userDelete);
 
