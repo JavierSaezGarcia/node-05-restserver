@@ -45,9 +45,13 @@ router.put('/:id',[
         validarCampos // Importamos el middleware de validar campos
 ]
 ,userPut); // router es un objeto, y el metodo put es un metodo del objeto
-// PATCH
-router.patch('/:id', userPatch);
+
 // DELETE
-router.delete('/:id', userDelete);
+router.delete('/:id', [
+        check('id', 'This is not a valid ID').isMongoId(), 
+        check('id').custom( existeUsuarioPorId ),
+        validarCampos // Importamos el middleware de validar campos
+]
+,userDelete);
 
 module.exports = router;
