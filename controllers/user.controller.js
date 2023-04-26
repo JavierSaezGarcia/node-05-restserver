@@ -13,10 +13,11 @@ const userGet = async (req = request, res = response) => {
     // const totalRegistros = await User.countDocuments(query); // Con countDocuments() podemos contar los registros de la BD
     // Esta forma es para ejecutar los await de forma simultanea y que no se bloquee el flujo de ejecucion a parte de ganar milisegundos en dicha ejecucion.
     const [totalRegistros, usuarios] = await Promise.all([
+        User.countDocuments(query),
         User.find(query)
             .skip(Number(desde))
-            .limit(Number(limite)),
-        User.countDocuments(query)
+            .limit(Number(limite))
+        
     ]);
 
     res.json({
