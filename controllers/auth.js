@@ -2,6 +2,7 @@ const { request, response } = require('express');
 const bcryptjs = require('bcryptjs');
 const User = require('../models/user');
 const { generarJWT } = require('../helpers/generar-jwt');
+const { googleVerify } = require('../helpers/google-verify');
 
 
 // definimos el controlador login
@@ -39,10 +40,6 @@ const login = async(req = request, res= response) => {
         const token = await generarJWT(user.id);
 
         // TODO enviar el token
-
-
-
-
         res.json({
             msg: 'Login ok',
             user,
@@ -57,6 +54,65 @@ const login = async(req = request, res= response) => {
     
 }
 
+const googleSignin = async(req, res= response) => {
+
+    const { id_token } = req.body;
+    
+    try {
+        
+        const { name, img, email } = await googleVerify(id_token);
+        
+        // TODO verificar si el usuario existe
+        let user = await User.findOne({email});
+        // console.log(user)
+        // TODO si el usuario no existe
+        if(!user){
+            // console.log('no hay user...',user)
+            const data = {
+                name,
+                email,
+                password: ':P',
+                img,
+                role: 'USER_ROLE',                
+                google: true, 
+            }
+            user = new User(data);
+            
+            await user.save();
+            
+        }
+        
+        // TODO si el usuario en DB no esta activo
+        if(!user.state){
+            console.log('este usuario no esta activo',user)
+            return res.status(401).json({
+                msg:'Hable con el administrador, usuario bloqueado'
+            })
+        }
+        // TODO generar el JWT
+        const token = await generarJWT(user.id);
+        
+     
+        res.json({
+            user,
+            token
+        })
+        
+    } catch (error) {
+        res.status(400).json({ 
+           
+            msg:'Token de google no es valido'
+            
+        })
+        
+    }    
+
+}
+
+
+
 module.exports = {
-    login
+    login,
+    googleSignin
+
 }

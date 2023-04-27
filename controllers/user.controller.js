@@ -42,15 +42,15 @@ const userGet = async (req = request, res = response) => {
 const userPost = async (req = request, res = response) => {
 
 
-    const body = req.body; // Obtenemos los datos del body
-    const { name, email, password, role } = body; // Desestructuramos los datos del body
+    const { name, email, password, role } = req.body; // Obtenemos los datos del body
+    // Desestructuramos los datos del body
     // Creamos una instancia del modelo para usarlo en la base de datos
     const user = new User({ name, email, password, role });
 
 
     // TODO Encriptar la contraseña
     // genSaltSync()  es la funcion que nos permite generar un numero aleatorio de vueltas para encriptar la contraseña, 10 es un numero conveniente
-    const salt = bcryptjs.genSaltSync(10);
+    const salt = bcryptjs.genSaltSync();
     // Pasamos salt y el password para que encripte la contraseña como parametros
     user.password = bcryptjs.hashSync(password, salt); // hashsync es para encriptar la contraseña de una sola vía
 

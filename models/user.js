@@ -28,6 +28,8 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     }
+    
+                
 
 });
 // Sobreescribimos el metodo toJSON para que no retorne el password y usamos una funcion normal 
