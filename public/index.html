@@ -34,7 +34,7 @@
 
            const token = { id_token: response.credential } 
 
-           fetch('https://node-05-restserver-production.up.railway.app', {
+           fetch('https://node-05-restserver-production.up.railway.app/api/auth/google', {
                 method: 'POST',
                 headers: {
                     'Content-Type':'application/json'
