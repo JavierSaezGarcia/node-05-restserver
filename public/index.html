@@ -31,7 +31,7 @@
      
       <script>
         function handleCredentialResponse(response) {   
-            console.log('esto es response credential',response.credential);        
+              
 
            const token = { id_token: response.credential } 
 
@@ -48,7 +48,7 @@
                 console.log('respuesta...',resp);
                 
                 localStorage.setItem('email', resp.user.email);
-                console.log('respuesta...',resp.user.email);
+                
             })
             .catch( console.warn );
       
@@ -57,7 +57,7 @@
         const button = document.getElementById('g_id_signout');
         button.onclick = async() => {
 
-            console.log(google.accounts.id)
+            
             google.accounts.id.disableAutoSelect()
             google.accounts.id.revoke(localStorage.getItem('email'), done => {
                 console.log('consent revoked');
