@@ -30,7 +30,7 @@
      
       <script>
         function handleCredentialResponse(response) {   
-            //console.log('esto es response credential',response.credential);        
+            console.log('esto es response credential',response.credential);        
 
            const token = { id_token: response.credential } 
 
@@ -44,7 +44,7 @@
            })
             .then( resp => resp.json())
             .then( resp => {
-                // console.log('respuesta...',resp);
+                console.log('respuesta...',resp);
                 
                 localStorage.setItem('email', resp.user.email);
                 console.log('respuesta...',resp.user.email);
