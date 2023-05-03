@@ -1,5 +1,6 @@
+
 const Role = require('../models/role');
-const User = require('../models/user');
+const { User, Categoria, Producto } = require('../models');
 
 const isRoleValid = async(role='') => {
     const existeRole = await Role.findOne({ role });
@@ -20,10 +21,28 @@ const existeUsuarioPorId = async (id) => {
         throw new Error(`El id ${ id } no existe en la Base de Datos`);
     }
 } 
+const existeCategoriaPorId = async (id) => {
+    
+    const existeCategoria = await Categoria.findById(id); // El metodo findById() es la funcion MOngoDB para buscar por id
+    
+    if(!existeCategoria){
+        throw new Error(`El id ${ id } no existe en la Base de Datos`);
+    }
+} 
+const existeProductoPorId = async (id) => {
+    
+    const existeProducto= await Producto.findById(id); // El metodo findById() es la funcion MOngoDB para buscar por id
+    
+    if(!existeProducto){
+        throw new Error(`El id ${ id } no existe en la Base de Datos`);
+    }
+} 
 
 module.exports = {
     isRoleValid,
     existeEmail,
-    existeUsuarioPorId
+    existeUsuarioPorId,
+    existeCategoriaPorId,
+    existeProductoPorId
 }
 

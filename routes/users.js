@@ -17,7 +17,7 @@ const { userGet,
         userPost,
         userPut,        
         userDelete
-        } = require('../controllers/user.controller');
+        } = require('../controllers/users');
 const router = Router();
 
 

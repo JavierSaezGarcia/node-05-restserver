@@ -8,7 +8,9 @@ const { googleVerify } = require('../helpers/google-verify');
 // definimos el controlador login
 const login = async(req = request, res= response) => {
     const { email, password } = req.body;
+    
     try {
+        
         // TODO verificar si el email existe
         const user = await User.findOne({email});
         if(!user){  
@@ -38,6 +40,7 @@ const login = async(req = request, res= response) => {
 
         // TODO generar el JWT
         const token = await generarJWT(user.id);
+        console.log('fgfhghfgh:    ',token);
 
         // TODO enviar el token
         res.json({
@@ -94,6 +97,7 @@ const googleSignin = async(req, res= response) => {
         }
         // TODO generar el JWT
         const token = await generarJWT(user.id);
+        
         
      
         res.json({

@@ -61,7 +61,7 @@ const userPost = async (req = request, res = response) => {
 }
 const userPut = async (req = request, res = response) => {
     const id = req.params.id;
-    const { _id, password, google, email, ...resto } = req.body;
+    const { _id, password, google, ...resto } = req.body;
     if (password) {
         // TODO Encriptar la contraseña
         // genSaltSync()  es la funcion que nos permite generar un numero aleatorio de vueltas para encriptar la contraseña, 10 es un numero conveniente
