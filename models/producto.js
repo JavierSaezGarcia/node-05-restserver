@@ -17,8 +17,8 @@ const productoSchema = new Schema({
         required: true        
     },
     img: { 
-        type:String,
-           default:'' },
+        type:String
+    },
     marca: {
         type: String,
         default:''

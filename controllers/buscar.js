@@ -86,10 +86,6 @@ const buscarProductos = async(termino = '', res = response) => {
     res.json({ 
         results: productos
     });
-
-
-
-
 }
 
 

@@ -29,6 +29,9 @@ const existeCategoriaPorId = async (id) => {
         throw new Error(`El id ${ id } no existe en la Base de Datos`);
     }
 } 
+/**
+ * productos
+ */
 const existeProductoPorId = async (id) => {
     
     const existeProducto= await Producto.findById(id); // El metodo findById() es la funcion MOngoDB para buscar por id
@@ -37,12 +40,24 @@ const existeProductoPorId = async (id) => {
         throw new Error(`El id ${ id } no existe en la Base de Datos`);
     }
 } 
+/** 
+ * validar colecciones permitidas 
+ * */
+
+const coleccionesPermitidas = (coleccion='', colecciones=[]) => {
+    const incluida = colecciones.includes(coleccion);
+    if(!incluida){
+        throw new Error(`La coleccion ${coleccion} no es permitida, ${colecciones}`);
+    }
+    return true;
+}
 
 module.exports = {
     isRoleValid,
     existeEmail,
     existeUsuarioPorId,
     existeCategoriaPorId,
-    existeProductoPorId
+    existeProductoPorId,
+    coleccionesPermitidas
 }
 
