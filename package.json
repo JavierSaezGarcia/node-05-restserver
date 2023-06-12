@@ -1,5 +1,5 @@
 {
-  "name": "05-restserver",
+  "name": "08-socket-chat",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -21,6 +21,7 @@
     "google-auth-library": "^8.7.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.4",
+    "socket.io": "^4.6.1",
     "uuid": "^9.0.0"
   }
 }
